@@ -1,0 +1,9 @@
+# UI 设计软件
+gimp
+inkscape
+krita
+# 编程工具 / 插件
+shellcheck
+clangd
+cmake
+ninja-build
