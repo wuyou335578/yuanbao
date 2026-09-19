@@ -1,0 +1,40 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "QuickSwitch 资源包",
+    "description": "悬浮窗界面与贴图",
+    "uuid": "c4fc64ae-7491-4975-af98-b55ae2cee629",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      19,
+      0
+    ]
+  },
+  "modules": [
+    {
+      "description": "资源包模块",
+      "type": "resources",
+      "uuid": "72306dee-f015-482a-a624-889dde12cac3",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "6af4460b-b107-4653-8089-8a97c677b06c",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}

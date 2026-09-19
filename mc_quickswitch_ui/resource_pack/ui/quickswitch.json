@@ -1,0 +1,191 @@
+{
+  "namespace": "quickswitch",
+  "main": {
+    "type": "screen",
+    "absorbs_input": false,
+    "always_accepts_input": false,
+    "force_render_below": true,
+    "is_showing_menu": false,
+    "render_game_behind": true,
+    "render_only_when_topmost": false,
+    "should_steal_mouse": false,
+    "controls": [
+      { "fab@quickswitch.fab_button": {} },
+      { "control_panel@quickswitch.control_panel": { "visible": false } }
+    ]
+  },
+
+  "fab_button": {
+    "type": "button",
+    "size": [30, 30],
+    "anchor_from": "top_right",
+    "anchor_to": "top_right",
+    "offset": [-8, 8],
+    "layer": 20,
+    "controls": [
+      {
+        "default": {
+          "type": "image",
+          "texture": "textures/ui/qs_fab",
+          "size": ["100%", "100%"],
+          "layer": 1
+        }
+      },
+      {
+        "pressed": {
+          "type": "image",
+          "texture": "textures/ui/qs_fab_pressed",
+          "size": ["100%", "100%"],
+          "layer": 2
+        }
+      },
+      {
+        "hover": {
+          "type": "image",
+          "texture": "textures/ui/qs_fab",
+          "size": ["100%", "100%"],
+          "layer": 3
+        }
+      },
+      {
+        "fab_label": {
+          "type": "label",
+          "text": "切",
+          "anchor_from": "center",
+          "anchor_to": "center",
+          "color": [1, 1, 1],
+          "font_size": 12,
+          "text_alignment": "center",
+          "layer": 10
+        }
+      }
+    ]
+  },
+
+  "control_panel": {
+    "type": "panel",
+    "size": [140, 122],
+    "anchor_from": "top_right",
+    "anchor_to": "top_right",
+    "offset": [-8, 44],
+    "layer": 19,
+    "controls": [
+      {
+        "bg": {
+          "type": "image",
+          "texture": "textures/ui/qs_panel",
+          "size": ["100%", "100%"],
+          "layer": 1
+        }
+      },
+      {
+        "title": {
+          "type": "label",
+          "text": "快捷切换",
+          "offset": [6, 4],
+          "size": [128, 14],
+          "color": [1, 1, 1],
+          "font_size": 11,
+          "text_alignment": "center",
+          "layer": 5
+        }
+      },
+      { "tool_btn@quickswitch.switch_button": { "offset": [6, 22] } },
+      { "weapon_btn@quickswitch.switch_button": { "offset": [6, 48] } },
+      { "sort_btn@quickswitch.plain_button": { "offset": [6, 74] } },
+      { "hide_btn@quickswitch.plain_button": { "offset": [6, 100] } }
+    ]
+  },
+
+  "switch_button": {
+    "type": "button",
+    "size": [128, 22],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 10,
+    "controls": [
+      {
+        "default": {
+          "type": "image",
+          "texture": "textures/ui/qs_btn_off",
+          "size": ["100%", "100%"],
+          "layer": 1
+        }
+      },
+      {
+        "hover": {
+          "type": "image",
+          "texture": "textures/ui/qs_btn_hover",
+          "size": ["100%", "100%"],
+          "layer": 2
+        }
+      },
+      {
+        "pressed": {
+          "type": "image",
+          "texture": "textures/ui/qs_btn_pressed",
+          "size": ["100%", "100%"],
+          "layer": 3
+        }
+      },
+      {
+        "button_label": {
+          "type": "label",
+          "text": "开关",
+          "anchor_from": "center",
+          "anchor_to": "center",
+          "color": [1, 1, 1],
+          "font_size": 10,
+          "text_alignment": "center",
+          "layer": 10
+        }
+      }
+    ]
+  },
+
+  "plain_button": {
+    "type": "button",
+    "size": [128, 22],
+    "anchor_from": "top_left",
+    "anchor_to": "top_left",
+    "layer": 10,
+    "controls": [
+      {
+        "default": {
+          "type": "image",
+          "texture": "textures/ui/qs_btn",
+          "size": ["100%", "100%"],
+          "layer": 1
+        }
+      },
+      {
+        "hover": {
+          "type": "image",
+          "texture": "textures/ui/qs_btn_hover",
+          "size": ["100%", "100%"],
+          "layer": 2
+        }
+      },
+      {
+        "pressed": {
+          "type": "image",
+          "texture": "textures/ui/qs_btn_pressed",
+          "size": ["100%", "100%"],
+          "layer": 3
+        }
+      },
+      {
+        "button_label": {
+          "type": "label",
+          "text": "按钮",
+          "anchor_from": "center",
+          "anchor_to": "center",
+          "color": [1, 1, 1],
+          "font_size": 10,
+          "text_alignment": "center",
+          "layer": 10
+        }
+      }
+    ]
+  }
+}

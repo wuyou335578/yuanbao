@@ -1,0 +1,40 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "QuickSwitch 快捷切换",
+    "description": "悬浮窗开关面板：挖矿自动换工具 / 战斗自动切武器 / 一键整理快捷栏",
+    "uuid": "6af4460b-b107-4653-8089-8a97c677b06c",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      19,
+      0
+    ]
+  },
+  "modules": [
+    {
+      "description": "行为包模块",
+      "type": "data",
+      "uuid": "a708dfae-cde6-46ff-9981-b73393e7b87d",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "c4fc64ae-7491-4975-af98-b55ae2cee629",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}
