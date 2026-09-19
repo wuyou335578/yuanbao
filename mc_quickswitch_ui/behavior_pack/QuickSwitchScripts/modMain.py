@@ -34,14 +34,14 @@ class QuickSwitchMod(object):
     def initServer(self):
         serverApi.RegisterSystem(
             MOD_NAME, SERVER_SYSTEM,
-            "QuickSwitchScripts.QuickSwitchScripts.QuickSwitchServerSystem.QuickSwitchServerSystem"
+            "QuickSwitchScripts.QuickSwitchServerSystem.QuickSwitchServerSystem"
         )
 
     @Mod.InitClient()
     def initClient(self):
         clientApi.RegisterSystem(
             MOD_NAME, CLIENT_SYSTEM,
-            "QuickSwitchScripts.QuickSwitchScripts.QuickSwitchClientSystem.QuickSwitchClientSystem"
+            "QuickSwitchScripts.QuickSwitchClientSystem.QuickSwitchClientSystem"
         )
 
     @Mod.DestroyServer()

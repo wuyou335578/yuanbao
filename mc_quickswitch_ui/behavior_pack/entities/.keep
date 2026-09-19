@@ -1,0 +1,3 @@
+# 行为包实体目录占位
+# 引擎在加载 data 模块时会检查该目录，缺失会输出
+# "make sure fold 'entities' is contained" 警告

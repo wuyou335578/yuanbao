@@ -11,7 +11,7 @@
     ],
     "min_engine_version": [
       1,
-      19,
+      16,
       0
     ]
   },
@@ -20,16 +20,6 @@
       "description": "行为包模块",
       "type": "data",
       "uuid": "a708dfae-cde6-46ff-9981-b73393e7b87d",
-      "version": [
-        1,
-        0,
-        0
-      ]
-    }
-  ],
-  "dependencies": [
-    {
-      "uuid": "c4fc64ae-7491-4975-af98-b55ae2cee629",
       "version": [
         1,
         0,
