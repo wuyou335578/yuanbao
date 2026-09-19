@@ -1,0 +1,19 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "QuickSwitch 快捷切换",
+    "description": "挖方块自动换工具、战斗自动切武器、一键整理快捷栏",
+    "uuid": "REPLACE_WITH_YOUR_OWN_UUID_A",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 20, 0]
+  },
+  "modules": [
+    {
+      "description": "行为包模块",
+      "type": "data",
+      "uuid": "REPLACE_WITH_YOUR_OWN_UUID_B",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": []
+}
