@@ -220,19 +220,79 @@ def _norm_mask(pil_or_arr):
                    else pil_or_arr)
     _, t = cv2.threshold(a, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     m = (t < 128).astype(np.uint8)
-    if m.sum() > m.size * 0.5:
+    # 判前景方向: 看外圈一圈像素，而不是看面积占比。
+    # 老写法 m.sum()>50% 就翻转，会把"锁""主页"这类实心图标整个反相 —— 实测踩到
+    border = np.concatenate([a[0, :], a[-1, :], a[:, 0], a[:, -1]]).astype(float)
+    if border.mean() < 128:      # 外圈是暗的 -> 暗的是背景
         m = 1 - m
-    # 裁到前景外框
+    return _to_square(m)
+
+
+def _to_square(m):
+    """裁到前景外框 -> 居中补成正方形 -> 缩放到 N×N
+
+    关键: 必须补成正方形再缩放，不能直接拉伸。
+    实测"减号"这种细长条，直接拉伸到 64×64 会变成 100% 前景的实心方块，
+    跟"方块"完全无法区分。补成正方形后宽高比得以保留。
+    """
     ys, xs = np.nonzero(m)
     if len(xs) == 0:
         return np.zeros((N, N), np.uint8)
-    x1, x2, y1, y2 = xs.min(), xs.max() + 1, ys.min(), ys.max() + 1
-    m = m[y1:y2, x1:x2]
-    m = cv2.resize(m * 255, (N, N), interpolation=cv2.INTER_AREA)
-    return (m > 100).astype(np.uint8)
+    m = m[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
+    h, w = m.shape
+    side = max(h, w)
+    pad = np.zeros((side, side), np.uint8)
+    pad[(side - h) // 2:(side - h) // 2 + h,
+        (side - w) // 2:(side - w) // 2 + w] = m
+    return (cv2.resize(pad * 255, (N, N), interpolation=cv2.INTER_AREA) > 100).astype(np.uint8)
 
 
 UNKNOWN_THRESHOLD = 0.42   # 低于此分一律判"未在图标库中"，不许瞎猜
+
+# 旋转搜索角度。0 放最前，保证正着的时候优先按原样匹配
+ROTATIONS = [0, 15, -15, 30, -30, 45, -45]
+
+
+def _rot_mask(m, deg):
+    """mask 绕中心旋转 deg 度。
+
+    注意: 只转、不裁、不改尺寸。因为 m 已经是补成正方形的 N×N，
+    旋转后仍是同尺寸同尺度，这样"转过去再转回来"才能精确复原。
+    早期版本转完又裁外框再拉伸，尺度会漂，导致旋转补偿失效。
+    """
+    if deg == 0:
+        return m
+    im = Image.fromarray(((1 - m) * 255).astype(np.uint8))
+    r = im.rotate(deg, resample=Image.BICUBIC, expand=False)
+    a = np.asarray(r)
+    _, t = cv2.threshold(a, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    return (t < 128).astype(np.uint8)
+
+
+def _iou(a, b):
+    inter = np.logical_and(a, b).sum()
+    union = np.logical_or(a, b).sum()
+    return float(inter) / union if union else 0.0
+
+
+def _hu_sim(m, tm):
+    """Hu 矩形状相似度，0~1，1=完全一致。
+
+    注意: 只看最外层轮廓，圆环类图标内部的十字/横杠会被丢弃，
+    所以圆环加号/减号/关闭的距离都是 0.0000 —— 不能单独用它打分。
+    """
+    def biggest(x):
+        cs, _ = cv2.findContours((x * 255).astype(np.uint8),
+                                 cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        return max(cs, key=cv2.contourArea) if cs else None
+    ca, cb = biggest(m), biggest(tm)
+    if ca is None or cb is None:
+        return 0.0
+    try:
+        d = cv2.matchShapes(ca, cb, cv2.CONTOURS_MATCH_I1, 0)
+    except cv2.error:
+        return 0.0
+    return 1.0 / (1.0 + d)
 
 
 def save_template(name, image, lib=None):
@@ -265,8 +325,13 @@ def load_templates():
     return _CACHE["T"]
 
 
-def match(mask_or_image, top=4):
-    """输入 mask 或灰度图，返回 [(名称, IoU), ...] 降序
+def match(mask_or_image, top=4, rotate=True):
+    """输入 mask 或灰度图，返回 [(名称, 分数), ...] 降序
+
+    打分 = 旋转不变 IoU（在 ROTATIONS 里取最好的那个角度）。
+    比 Hu 矩(matchShapes)强在: 保留内部细节，能区分圆环加号/减号/关闭
+    （Hu 矩对这三个的距离全是 0.0000，完全分不开）；
+    同时又不像固定角度 IoU 那样怕旋转。
 
     内置库 + 自定义库一起比。最高分低于 UNKNOWN_THRESHOLD 会把第一名
     替换成 "未在图标库中"，避免低分硬套一个错误名字。
@@ -274,16 +339,38 @@ def match(mask_or_image, top=4):
     m = _norm_mask(mask_or_image)
     T = dict(load_templates())
     T.update(_load_custom())
+    angles = ROTATIONS if rotate else [0]
     out = []
     for name, tm in T.items():
-        inter = np.logical_and(m, tm).sum()
-        union = np.logical_or(m, tm).sum()
-        out.append((name, float(inter) / union if union else 0.0))
+        best, best_deg = 0.0, 0
+        for deg in angles:
+            v = _iou(m if deg == 0 else _rot_mask(m, deg), tm)
+            if v > best:
+                best, best_deg = v, deg
+        out.append((name, best, best_deg))
     out.sort(key=lambda x: -x[1])
-    out = out[:top]
-    if out and out[0][1] < UNKNOWN_THRESHOLD:
-        out = [("未在图标库中", out[0][1])] + [
-            (n, s) for n, s in out[:3]]
+    res = [(n, s) for n, s, _ in out[:top]]
+    if res and res[0][1] < UNKNOWN_THRESHOLD:
+        res = [("未在图标库中", res[0][1])] + res[:3]
+    return res[:top]
+
+
+def match_detail(mask_or_image, top=4):
+    """同 match()，但额外给出每个候选的 IoU / Hu 相似度 / 最佳旋转角，便于排查"""
+    m = _norm_mask(mask_or_image)
+    T = dict(load_templates())
+    T.update(_load_custom())
+    out = []
+    for name, tm in T.items():
+        best, best_deg = 0.0, 0
+        for deg in ROTATIONS:
+            v = _iou(m if deg == 0 else _rot_mask(m, deg), tm)
+            if v > best:
+                best, best_deg = v, deg
+        out.append({"name": name, "iou_rot": round(best, 4),
+                    "iou_0deg": round(_iou(m, tm), 4),
+                    "hu": round(_hu_sim(m, tm), 4), "rot_deg": best_deg})
+    out.sort(key=lambda d: -d["iou_rot"])
     return out[:top]
 
 
