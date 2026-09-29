@@ -9,6 +9,27 @@ import cv2
 import numpy as np
 
 
+def fit_ellipse(cnt):
+    """把轮廓拟合成椭圆，返回归一化的 (中心, 长轴, 短轴, 倾角)
+
+    OpenCV 的 fitEllipse 有两个坑，不处理会拿到错的角度:
+      1) 返回的角度范围是 [0,180)，且长短轴可能互换
+      2) 倾角可能比真实值差 90°
+    这里统一成: 长轴 >= 短轴，倾角归一到 [0,180)
+    """
+    if cnt is None or len(cnt) < 5:
+        return None
+    (cx, cy), (ma, mi), ang = cv2.fitEllipse(cnt)
+    if ma < mi:                 # 长短轴互换了，角度要补 90°
+        ma, mi = mi, ma
+        ang = ang + 90
+    ang = ang % 180
+    return {"center": [round(cx, 1), round(cy, 1)],
+            "axis_major": round(ma, 1), "axis_minor": round(mi, 1),
+            "angle_deg": round(ang, 1),
+            "eccentricity": round(math.sqrt(1 - (mi / ma) ** 2), 3) if ma else 0}
+
+
 def dedup_circles(cs, tol=12):
     """霍夫圆会重复检出同心圆/同一圆，按 (x,y,r) 近似去重"""
     kept = []
@@ -85,13 +106,19 @@ def analyze(path):
         x, y, bw, bh = cv2.boundingRect(c)
         b, g, rr = (im[cy, cx].tolist() if 0 <= cy < h and 0 <= cx < w else [0, 0, 0])
         verts = [[int(p[0][0]), int(p[0][1])] for p in ap]
-        res['shapes'].append({
+        rec = {
             'type': NAMES.get(n, '圆/曲线(%d顶点)' % n),
             'vertices': n, 'area': int(a), 'center': [cx, cy],
             'bbox': [int(x), int(y), int(bw), int(bh)],
             'color_rgb': [int(rr), int(g), int(b)],
             'points': verts[:12],
-        })
+        }
+        # 椭圆拟合: 外接框拿不到倾角，fitEllipse 能
+        if len(c) >= 5:
+            e = fit_ellipse(c)
+            if e:
+                rec['ellipse'] = e
+        res['shapes'].append(rec)
 
     # 直线
     lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 60, minLineLength=50, maxLineGap=8)
