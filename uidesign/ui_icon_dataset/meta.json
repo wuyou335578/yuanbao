@@ -1,0 +1,251 @@
+{
+  "name": "UI 图标符号数据集",
+  "created": "2026-10-03T00:42:20.483006",
+  "samples": [
+    {
+      "file": "images/builtin_圆环加号.png",
+      "class": "圆环加号",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.2588
+    },
+    {
+      "file": "images/builtin_圆环减号.png",
+      "class": "圆环减号",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.2139
+    },
+    {
+      "file": "images/builtin_圆环关闭.png",
+      "class": "圆环关闭",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.2227
+    },
+    {
+      "file": "images/builtin_圆环播放.png",
+      "class": "圆环播放",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.2463
+    },
+    {
+      "file": "images/builtin_加号.png",
+      "class": "加号",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.2891
+    },
+    {
+      "file": "images/builtin_减号.png",
+      "class": "减号",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.1562
+    },
+    {
+      "file": "images/builtin_关闭X.png",
+      "class": "关闭X",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.3867
+    },
+    {
+      "file": "images/builtin_对勾.png",
+      "class": "对勾",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.1975
+    },
+    {
+      "file": "images/builtin_右箭头.png",
+      "class": "右箭头",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.2063
+    },
+    {
+      "file": "images/builtin_左箭头.png",
+      "class": "左箭头",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.2063
+    },
+    {
+      "file": "images/builtin_心形.png",
+      "class": "心形",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.5945
+    },
+    {
+      "file": "images/builtin_星形.png",
+      "class": "星形",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.3486
+    },
+    {
+      "file": "images/builtin_笑脸.png",
+      "class": "笑脸",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.2668
+    },
+    {
+      "file": "images/builtin_麦克风.png",
+      "class": "麦克风",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.2363
+    },
+    {
+      "file": "images/builtin_搜索放大镜.png",
+      "class": "搜索放大镜",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.1729
+    },
+    {
+      "file": "images/builtin_汉堡菜单.png",
+      "class": "汉堡菜单",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.375
+    },
+    {
+      "file": "images/builtin_齿轮设置.png",
+      "class": "齿轮设置",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.459
+    },
+    {
+      "file": "images/builtin_铃铛通知.png",
+      "class": "铃铛通知",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.6045
+    },
+    {
+      "file": "images/builtin_信封邮件.png",
+      "class": "信封邮件",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.2271
+    },
+    {
+      "file": "images/builtin_锁.png",
+      "class": "锁",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.437
+    },
+    {
+      "file": "images/builtin_眼睛.png",
+      "class": "眼睛",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.165
+    },
+    {
+      "file": "images/builtin_主页.png",
+      "class": "主页",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.5796
+    },
+    {
+      "file": "images/builtin_垃圾桶删除.png",
+      "class": "垃圾桶删除",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.2507
+    },
+    {
+      "file": "images/builtin_相机.png",
+      "class": "相机",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.2625
+    },
+    {
+      "file": "images/builtin_用户头像.png",
+      "class": "用户头像",
+      "source": "内置模板(程序化生成)",
+      "verified": "yes",
+      "foreground_ratio": 0.5603
+    },
+    {
+      "file": "images/capture_0.png",
+      "class": "unknown_0",
+      "source": "真实截图裁剪(待人工标注)",
+      "verified": "no",
+      "match_guess": "未在图标库中",
+      "match_score": 0.289,
+      "foreground_ratio": 0.0625,
+      "svg": "svg/capture_0.svg"
+    },
+    {
+      "file": "images/capture_1.png",
+      "class": "unknown_1",
+      "source": "真实截图裁剪(待人工标注)",
+      "verified": "no",
+      "match_guess": "圆环减号",
+      "match_score": 0.609,
+      "foreground_ratio": 0.2588,
+      "svg": "svg/capture_1.svg"
+    },
+    {
+      "file": "images/capture_2.png",
+      "class": "unknown_2",
+      "source": "真实截图裁剪(待人工标注)",
+      "verified": "no",
+      "match_guess": "笑脸",
+      "match_score": 0.615,
+      "foreground_ratio": 0.3074,
+      "svg": "svg/capture_2.svg"
+    },
+    {
+      "file": "images/capture_3.png",
+      "class": "unknown_3",
+      "source": "真实截图裁剪(待人工标注)",
+      "verified": "no",
+      "match_guess": "未在图标库中",
+      "match_score": 0.404,
+      "foreground_ratio": 0.2974,
+      "svg": "svg/capture_3.svg"
+    },
+    {
+      "file": "images/capture_4.png",
+      "class": "unknown_4",
+      "source": "真实截图裁剪(待人工标注)",
+      "verified": "no",
+      "match_guess": "圆环加号",
+      "match_score": 0.754,
+      "foreground_ratio": 0.2512,
+      "svg": "svg/capture_4.svg"
+    },
+    {
+      "file": "images/capture_5.png",
+      "class": "unknown_5",
+      "source": "真实截图裁剪(待人工标注)",
+      "verified": "no",
+      "match_guess": "未在图标库中",
+      "match_score": 0.171,
+      "foreground_ratio": 0.0,
+      "svg": "svg/capture_5.svg"
+    },
+    {
+      "file": "images/capture_6.png",
+      "class": "unknown_6",
+      "source": "真实截图裁剪(待人工标注)",
+      "verified": "no",
+      "match_guess": "未在图标库中",
+      "match_score": 0.288,
+      "foreground_ratio": 0.0452,
+      "svg": "svg/capture_6.svg"
+    }
+  ]
+}
